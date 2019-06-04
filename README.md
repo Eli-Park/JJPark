@@ -12,6 +12,7 @@
 #### March, 2014-	Now  
  Major: Statistics  
  Relevant Courses Taken:  
+
     -Statistical Computer Programming  
     -Regression Analysis  
     -Introduction to Probability Theory  
