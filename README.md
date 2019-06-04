@@ -12,10 +12,10 @@
 #### March, 2014-	Now  
  Major: Statistics (GPA 3.51/4.5)  
  Relevant Courses Taken:  
-Statistical Computer Programming	Regression Analysis   
-Introduction to Probability Theory	Mathematical Statistics  
-Categorical Data Analysis	Statistical Computing Method  
-Introduction to Data Mining	Linear Algebra  
+  Statistical Computer Programming	Regression Analysis   
+  Introduction to Probability Theory	Mathematical Statistics  
+  Categorical Data Analysis	Statistical Computing Method  
+  Introduction to Data Mining	Linear Algebra  
 
 
 ## BUSINESS SKILLS  
@@ -36,9 +36,10 @@ JLPT N3 (November, 2012)
  Prepare official documents  
 ### Research Company K-Stat  
 #### July, 2018- August, 2018  	
- Organize and maintain record	 Read the proofs  
- Receive and place phone calls	 Build Database  
- Mail, fax, or arrange for delivery	 Conduct Telephone Research  
+ Organize and maintain record
+ Read the proofs  
+ Build Database  
+ Conduct Telephone Research  
 
 
 ## EXTRACURRICULAR ACTIVITIES  
@@ -50,11 +51,15 @@ JLPT N3 (November, 2012)
  Learn and Apply Several Basic Data Mining Processes  
 ### Accounting Executive, Korea University Wine Club Sommelier  
 #### September 2017- June 2018  
- Hold 6 Wine Seminars per Semester	 Responsible for Accounting
- Manage Wine Bar in Campus Festival	 Participate in Wine Fair  
+ Hold 6 Wine Seminars per Semester  
+ Responsible for Accounting  
+ Manage Wine Bar in Campus Festival  
+ Participate in Wine Fair  
 ### Executive, Korea University Big Data Study Club KU-BIG  
 #### September 2018-  
- Study Various Types of Data Analysis	 Proceed Research Project
- Abnormality Detection with VAE 	 Tomato Meter Text Mining  
+ Study Various Types of Data Analysis
+ Proceed Research Project  
+ Abnormality Detection with VAE  
+ Tomato Meter Text Mining  
 
 This Page is for archiving my works
