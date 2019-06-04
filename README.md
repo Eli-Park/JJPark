@@ -10,7 +10,7 @@
 
 ### Senior, School of Political Economic Science, Korea University  
 #### March, 2014-	Now  
- Major: Statistics (GPA 3.51/4.5)  
+ Major: Statistics
  Relevant Courses Taken:  
   -Statistical Computer Programming  
   -Regression Analysis  
@@ -27,7 +27,8 @@
 
 ## BUSINESS SKILLS  
 ### English  
-TOEIC 925 	Opic IH  
+  -TOEIC 900+  
+  -Opic IH  
 ### Computer  
   -Working Knowledge in Word • Excel • PowerPoint  
   -R  
