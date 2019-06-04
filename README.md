@@ -12,28 +12,28 @@
 #### March, 2014-	Now  
  Major: Statistics  
  Relevant Courses Taken:  
-  -Statistical Computer Programming  
-  -Regression Analysis  
-  -Introduction to Probability Theory  
-  -Mathematical Statistics  
-  -Categorical Data Analysis  
-  -Statistical Computing Method    
-  -Introduction to Data Mining  
-  -Multivariate Data Analysis  
-  -Biological Data Analysis  
-  -Experimental Design Method  
-  -Financial Statistics  
+    -Statistical Computer Programming  
+    -Regression Analysis  
+    -Introduction to Probability Theory  
+    -Mathematical Statistics  
+    -Categorical Data Analysis  
+    -Statistical Computing Method    
+    -Introduction to Data Mining  
+    -Multivariate Data Analysis  
+    -Biological Data Analysis  
+    -Experimental Design Method  
+    -Financial Statistics  
 
 
 ## BUSINESS SKILLS  
 ### English  
-  -TOEIC 900+  
-  -Opic IH  
+    -TOEIC 900+  
+    -Opic IH  
 ### Computer  
-  -Working Knowledge in Word • Excel • PowerPoint  
-  -R  
-  -SAS Certified Base Programmer  
-  -Straight Copy Rate (Korean 600 strokes / English 60 wpm)  
+    -Working Knowledge in Word • Excel • PowerPoint  
+    -R  
+    -SAS Certified Base Programmer  
+    -Straight Copy Rate (Korean 600 strokes / English 60 wpm)  
 ### Japanese  
 JLPT N3 (November, 2012)  
 
