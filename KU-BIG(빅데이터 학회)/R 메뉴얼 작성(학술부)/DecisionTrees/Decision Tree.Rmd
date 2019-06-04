@@ -1,0 +1,160 @@
+---
+title: "Decision Tree with Iris Data"
+author: "Park Jeong Jin"
+date: "2019년 2월 12일"
+output: html_document
+---
+#Data Import
+
+```{r}
+iris = read.csv("iris.csv",header=T) 
+iris$variety = as.factor(iris$variety)
+```
+
+##필요한 패키지 불러오기.
+```{r}
+library(tree)
+```
+
+#Model Fitting
+##Grow a tree
+```{r}
+fit = tree(variety ~., data=iris, split="deviance")
+#NOTE: deviance=(entropy * 2n), using base e for log 
+#split="gini" differs from split="deviance", but deviance is printed for both.
+
+fit
+summary(fit)
+plot(fit);  text(fit)
+```
+
+##Pruning
+```{r}
+cv.fit = cv.tree(fit, FUN=prune.misclass)
+names(cv.fit)
+cv.fit
+
+plot(cv.fit$size,cv.fit$dev, type="b")
+
+plot(cv.fit$k,cv.fit$dev, type="b")
+
+#best는 불러들이고자 하는 decision tree의 size를 지정해줌.
+fit.pruned = prune.misclass(fit, best=5) 
+plot(fit.pruned);text(fit.pruned)
+
+
+fit.pruned = prune.misclass(fit, best=cv.fit$size[which.min(cv.fit$dev)]) 
+plot(fit.pruned);text(fit.pruned)
+```
+
+##Prediction & Error
+```{r}
+### Prediction
+pred = predict(fit.pruned, newdata=iris, type="class") #prediction
+ctable = table(iris$variety, pred, dnn=c("Actual", "Predicted")); ctable #classification table
+
+
+### Errors
+
+miss.err = 1-sum(diag(ctable))/sum(ctable); miss.err # Misclassification Rate
+pred.acc = 1 - miss.err; pred.acc #Prediction Accuracy
+```
+
+#Computing the test error by paritioning
+
+## Data partition
+```{r}
+set.seed(123)
+V = 2
+n =  nrow(iris)
+id = sample(1:V, n, prob = c(0.7,0.3), replace = T) # Partitioning 7:3
+ii = which(id==1)
+iris.train = iris[ii,]
+iris.test  = iris[-ii,]
+```
+
+
+## Growing and Pruning
+```{r}
+# Grow a tree
+
+fit = tree(variety ~., iris.train)
+fit
+summary(fit)
+plot(fit);  text(fit)
+
+
+# Prune the tree
+
+set.seed(3)
+cv.fit = cv.tree(fit, FUN=prune.misclass)
+names(cv.fit)
+cv.fit
+
+plot(cv.fit$size,cv.fit$dev, type="b")
+plot(cv.fit$k,cv.fit$dev, type="b")
+
+fit.pruned = prune.misclass(fit, best=cv.fit$size[which.min(cv.fit$dev)])
+plot(fit.pruned);text(fit.pruned)
+```
+
+## Prediction & Errors
+```{r}
+#Prediction
+pred = predict(fit.pruned, newdata=iris.test, type="class") #prediction
+ctable = table(iris.test$variety, pred, dnn=c("Actual", "Predicted"));
+ctable #classification table
+
+
+#Errors
+
+miss.err = 1-sum(diag(ctable))/sum(ctable); miss.err # Misclassification Rate
+pred.acc = 1 - miss.err; pred.acc #Prediction Accuracy
+```
+
+# 10-fold Cross Validation
+## Data Set 10개로 분할.
+```{r}
+
+V = 10
+miss.err.train = 0
+miss.err.test = 0
+
+id = sample(1:V, nrow(iris), replace = T)
+```
+
+## For문을 통하여 각 구간별 error 구함.
+```{r}
+
+for(i in 1:V) {
+  
+  #print(i) <- 각 구간에 잘 작동 중인지 확인하는 장치
+  iris.train = iris[id != i,] 
+  iris.test = iris[id == i,] 
+  
+  fit = tree(variety ~., iris.train) #Growing
+  
+  cv.fit = cv.tree(fit, FUN=prune.misclass)
+  tree.size.min.dev = cv.fit$size[which.min(cv.fit$dev)]
+  fit.pruned = prune.misclass(fit, best=tree.size.min.dev) # Pruning
+  
+  pred = predict(fit.pruned, newdata=iris.train, type="class") #prediction
+  ctable = table(iris.train$variety, pred, dnn=c("Actual", "Predicted"));
+  miss.err.train.temp = 1-sum(diag(ctable))/sum(ctable)
+  miss.err.train = miss.err.train + miss.err.train.temp
+  
+  pred = predict(fit.pruned, newdata=iris.test, type="class") #prediction
+  ctable = table(iris.test$variety, pred, dnn=c("Actual", "Predicted"));
+  miss.err.test.temp = 1-sum(diag(ctable))/sum(ctable)
+  miss.err.test = miss.err.test + miss.err.test.temp 
+  
+}
+
+```
+
+## 최종 CV error
+```{r}
+cv.err.train = miss.err.train/ V; cv.err.train # CV training error
+cv.err.test = miss.err.test/ V;cv.err.test # CV test error
+```
+

@@ -1,0 +1,152 @@
+---
+title: "Multinomial Regression with Iris Data"
+author: "Park Jeong Jin"
+date: "2019년 2월 12일"
+output: html_document
+---
+
+Iris data를 이용한 Multinomial Regression임
+
+우선 필요한 패키지를 불러옴.
+```{r}
+library(nnet)
+```
+
+# Data import
+```{r}
+
+
+iris <- read.csv("iris.csv",header=T) #csv 파일을 불러들임.
+iris1 <- iris
+iris1$variety <- as.factor(iris1$variety) #문자열 변수를 범주형 변수로 전환
+
+```
+## Data Exploration
+```{r}
+str(iris)
+dim(iris)
+barplot(table(iris$variety), col = "blue", xlab = "Variety", ylab = "Frequency")
+```
+
+
+# Split Data
+
+Data를 Train과 Test로 나눔
+```{r}
+
+a<-sample(1:150, 100)
+iris.train <- iris1[a,]
+iris.test <- iris1[-a,]
+```
+
+# Model Fitting
+
+Variety를 종속변수로 놓고, 나머를 설명변수로 이용.
+```{r}
+
+# Model fit(Full)
+fit = multinom(variety ~., data = iris.train)
+summary(fit)
+
+
+```
+
+Stepwise 방법을 통해 모델을 축소
+```{r}
+
+# Model selection
+fit2 = step(fit, direction = "both")
+summary(fit2)
+```
+
+
+# Prediction
+
+축소된 모델을 통하여 train, test 정확도를 구함.
+```{r}
+
+#train
+iris.train$reduce = predict(fit2,iris.train,type = "class")
+train <- table(iris.train$variety,iris.train$reduce)
+train
+#test
+iris.test$reduce = predict(fit2,iris.test,type = "class")
+head(iris.test)
+
+test<-table(iris.test$variety,iris.test$reduce)
+test
+
+```
+
+
+$$
+Prediction Acc = \frac{TP}{TP+FP}
+$$
+```{r}
+### Errors
+#train
+miss.err = 1-sum(diag(train))/sum(train) # Misclassification Rate
+miss.err
+
+pred.acc = 1 - miss.err #Prediction Accuracy
+pred.acc  
+#test
+miss.err = 1-sum(diag(test))/sum(test) # Misclassification Rate
+miss.err
+
+pred.acc = 1 - miss.err #Prediction Accuracy
+pred.acc  
+```
+
+# CV Error(Cross-Validation Error)
+
+10-fold CV을 시도함.
+
+sample문을 통하여 데이터를 10개로 쪼갬.
+```{r}
+
+V = 10 #V값에 따라 분할 갯수가 달라짐.
+miss.err.train = 0
+miss.err.test = 0
+
+id = sample(1:V, nrow(iris1), replace = T)
+```
+
+for 문을 통하여 10번 반복.
+```{r echo=T, results='hide'}
+
+for(i in 1:V) {
+  
+  #print(i) <- 각 구간에 잘 작동 중인지 확인하는 장치
+
+  iris.train = iris1[id != i,] 
+  iris.test = iris1[id == i,] 
+  
+  fit = multinom(variety ~., data = iris.train)
+  fit2 = step(fit, direction = "both") #Stepwise variable selection
+  iris.train$reduce = predict(fit2,iris.train,type = "class")
+  train <- table(iris.train$variety,iris.train$reduce)
+  iris.test$reduce = predict(fit2,iris.test,type = "class")
+  test<-table(iris.test$variety,iris.test$reduce)
+  
+  pred.train = predict(fit2, newdata=iris.train, type="class")
+  miss.err.train.temp = 1-sum(diag(train))/sum(train)
+  miss.err.train = miss.err.train + miss.err.train.temp
+  
+  pred.test = predict(fit2, newdata=iris.test, type="class")
+  miss.err.test.temp = 1-sum(diag(test))/sum(test)
+  miss.err.test = miss.err.train + miss.err.test.temp
+  
+}
+
+```
+
+최종 Cross Validation Error.
+```{r}
+cv.err.train = miss.err.train/ V # CV training error
+cv.err.train
+
+cv.err.test = miss.err.test/ V # CV test error
+cv.err.test
+```
+

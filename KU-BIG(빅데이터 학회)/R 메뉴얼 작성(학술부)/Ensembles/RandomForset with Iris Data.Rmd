@@ -1,0 +1,123 @@
+---
+title: "Random Forest with Iris Data"
+author: "Park Jeong Jin"
+date: "2019년 2월 12일"
+output: html_document
+---
+#Data Import
+
+```{r}
+iris = read.csv("iris.csv",header=T) 
+iris$variety = as.factor(iris$variety)
+```
+
+##필요한 패키지 불러오기.
+```{r}
+library(randomForest)
+```
+
+#Model Fitting
+##Grow a tree
+```{r}
+set.seed(1234)
+#100개의 tree를 그리며, 2개의 변수를 이용.
+fit = randomForest(variety~., data=iris, ntree=100, mtry=2, importance=T)
+
+#각 class별, 그리고 OOB(out of the bag) error rate
+plot(fit, type="l")
+importance(fit)
+
+```
+
+##Prediction & Error
+```{r}
+# Prediction
+
+pred = predict(fit, newdata=iris, type="class")
+ctable = table(iris$variety, pred, dnn=c("Actual", "Predicted")); ctable #classification table
+
+
+# Errors
+
+miss.err = 1-sum(diag(ctable))/sum(ctable); miss.err # Misclassification Rate
+pred.acc = 1 - miss.err; pred.acc #Prediction Accuracy
+```
+
+#Computing the test error by paritioning
+
+## Data partition
+```{r}
+V = 2
+n =  nrow(iris)
+id = sample(1:V, n, prob = c(0.7,0.3), replace = T) # Partitioning 7:3
+ii = which(id==1)
+iris.train = iris[ii,]
+iris.test  = iris[-ii,]
+
+```
+
+## Grow trees
+
+```{r}
+set.seed(1234)
+fit = randomForest(variety~., data=iris.train, ntree=100, mtry=2, importance=T)
+
+plot(fit, type="l")
+importance(fit)
+```
+
+## Preidiction & Errors
+
+```{r}
+# Prediction
+
+pred = predict(fit, newdata=iris.test, type="class")
+ctable = table(iris.test$variety, pred, dnn=c("Actual", "Predicted")); ctable #classification table
+
+
+# Errors
+
+miss.err = 1-sum(diag(ctable))/sum(ctable); miss.err # Misclassification Rate
+pred.acc = 1 - miss.err; pred.acc #Prediction Accuracy
+```
+
+# 10-fold Cross Validation
+## Data Set 10개로 분할.
+```{r}
+
+V = 10 #V-fold CV
+miss.err.train = 0
+miss.err.test = 0
+set.seed(12345)
+id = sample(1:V, nrow(iris), replace = T)
+```
+
+## For문을 통하여 각 구간별 error 구함.
+```{r}
+for(i in 1:V) {
+  
+  #print(i) <- 구간별로 잘 돌아가고 있는지 확인하기 위한 장치.
+  
+  iris.train = iris[id != i,] 
+  iris.test = iris[id == i,] 
+  
+  fit = randomForest(variety~., data=iris.train, ntree=100, mtry=2, importance=T)
+
+  pred = predict(fit, newdata=iris.train, type="class")
+  ctable = table(iris.train$variety, pred, dnn=c("Actual", "Predicted"))
+  miss.err.train.temp = 1-sum(diag(ctable))/sum(ctable)
+  miss.err.train = miss.err.train + miss.err.train.temp
+
+  pred = predict(fit, newdata=iris.test, type="class")
+  ctable = table(iris.test$variety, pred, dnn=c("Actual", "Predicted"))
+  miss.err.test.temp = 1-sum(diag(ctable))/sum(ctable)
+  miss.err.test = miss.err.test + miss.err.test.temp
+  
+}
+```
+
+## 최종 CV error
+```{r}
+cv.err.train = miss.err.train/ V; cv.err.train # CV training error
+cv.err.test = miss.err.test/ V;cv.err.test # CV test error
+```

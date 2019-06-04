@@ -1,0 +1,30 @@
+#isso-root div.text a {
+    color: #c05b4d;
+}
+
+#isso-root div.text a:hover {
+    border-bottom: 1px solid #c05b4d;
+}
+
+/* this worked well on desktop, but broke mobile rendering */
+.containerNOT {
+    width: 1024px;
+}
+
+.post .post-tocNOT {
+    margin-left: 1009px;
+}
+
+/* remove left/right figure margin */
+figure {
+    margin: 1em 0px
+}
+
+figcaption {
+    color: #686868;
+    font-style: italic;
+    font-size: 0.9em;
+    line-height: 1.3153846154;
+    padding-top: 0.5384615385em;
+    /* text-align: left; */
+}
