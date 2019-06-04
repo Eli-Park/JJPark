@@ -12,19 +12,27 @@
 #### March, 2014-	Now  
  Major: Statistics (GPA 3.51/4.5)  
  Relevant Courses Taken:  
-  Statistical Computer Programming	Regression Analysis   
-  Introduction to Probability Theory	Mathematical Statistics  
-  Categorical Data Analysis	Statistical Computing Method  
-  Introduction to Data Mining	Linear Algebra  
+  -Statistical Computer Programming  
+  -Regression Analysis  
+  -Introduction to Probability Theory  
+  -Mathematical Statistics  
+  -Categorical Data Analysis  
+  -Statistical Computing Method    
+  -Introduction to Data Mining  
+  -Multivariate Data Analysis  
+  -Biological Data Analysis  
+  -Experimental Design Method  
+  -Financial Statistics  
 
 
 ## BUSINESS SKILLS  
 ### English  
 TOEIC 925 	Opic IH  
 ### Computer  
-Working Knowledge in Word • Excel • PowerPoint • R  
-SAS Certified Base Programmer  
-Straight Copy Rate (Korean 600 strokes / English 60 wpm)  
+  -Working Knowledge in Word • Excel • PowerPoint  
+  -R  
+  -SAS Certified Base Programmer  
+  -Straight Copy Rate (Korean 600 strokes / English 60 wpm)  
 ### Japanese  
 JLPT N3 (November, 2012)  
 
@@ -32,7 +40,7 @@ JLPT N3 (November, 2012)
 ## WORKING EXPREIENCES  
 ### Outsourcing Company BSH  
 #### January, 2018- February, 2018  	
- Assist year-end tax adjustment 	 Receive and place phone calls  
+ Year-end tax adjustment  
  Prepare official documents  
 ### Research Company K-Stat  
 #### July, 2018- August, 2018  	
