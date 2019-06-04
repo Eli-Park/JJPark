@@ -10,7 +10,7 @@
 
 ### Senior, School of Political Economic Science, Korea University  
 #### March, 2014-	Now  
- Major: Statistics
+ Major: Statistics  
  Relevant Courses Taken:  
   -Statistical Computer Programming  
   -Regression Analysis  
