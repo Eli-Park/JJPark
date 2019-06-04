@@ -1,4 +1,4 @@
-# 박정진  
+# JeongJin Park, 박정진  
 010.4195.0878 • pkmon1d@naver.com  
 
 
@@ -57,7 +57,7 @@ JLPT N3 (November, 2012)
  Participate in Wine Fair  
 ### Executive, Korea University Big Data Study Club KU-BIG  
 #### September 2018-  
- Study Various Types of Data Analysis
+ Study Various Types of Data Analysis  
  Proceed Research Project  
  Abnormality Detection with VAE  
  Tomato Meter Text Mining  
