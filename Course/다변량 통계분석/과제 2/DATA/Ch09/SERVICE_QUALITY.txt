@@ -1,0 +1,10 @@
+Trust_salesperson  1.00
+Satis_salesperson   .63  1.00
+Cross_sell          .28   .22  1.00
+Total_ins_sales     .23   .24   .51  1.00
+Appear_similar      .38   .33   .29   .20  1.00
+Lifestyle_similar   .42   .28   .36   .39   .57  1.00
+Status_similar      .37   .30   .39   .29   .48   .59  1.00
+Interact_intensity  .30   .36   .21   .18   .15   .29   .30  1.00
+Mutual_disclose     .45   .37   .31   .39   .29   .41   .35   .44  1.00
+Coop_intention      .56   .56   .24   .29   .18   .33   .30   .46   .63  1.00

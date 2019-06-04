@@ -1,0 +1,5 @@
+Birth_place           1.00
+Education_level       0.62  1.00
+Modernization_index   0.77  0.58  1.00
+Modern_object_scale   0.54  0.42  0.59  1.00
+Media_exp_index       0.72  0.57  0.70  0.52  1.00

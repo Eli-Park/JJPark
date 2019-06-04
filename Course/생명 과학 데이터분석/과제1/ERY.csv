@@ -1,0 +1,17 @@
+Severity,Gender,Survival,count
+1,Male,Dead,2
+1,Male,Arrive,21
+1,Female,Dead,0
+1,Female,Arrive,10
+2,Male,Dead,2
+2,Male,Arrive,40
+2,Female,Dead,0
+2,Female,Arrive,18
+3,Male,Dead,6
+3,Male,Arrive,33
+3,Female,Dead,0
+3,Female,Arrive,10
+4,Male,Dead,17
+4,Male,Arrive,16
+4,Female,Dead,0
+4,Female,Arrive,4

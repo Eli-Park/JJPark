@@ -1,0 +1,13 @@
+time,gender,type,obs
+<0.5h,m,arts,63
+<0.5h,m,work,125
+<0.5h,w,arts,80
+<0.5h,w,work,253
+<2h,m,arts,77
+<2h,m,work,146
+<2h,w,arts,69
+<2h,w,work,206
+>2h,m,arts,33
+>2h,m,work,62
+>2h,w,arts,15
+>2h,w,work,42

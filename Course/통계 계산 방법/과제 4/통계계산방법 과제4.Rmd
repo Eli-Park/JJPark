@@ -1,0 +1,226 @@
+---
+title: "STAT323 Assignment #4"
+author: "Park Jeong Jin(2014150137)"
+date: "2018³â 6¿ù 12ÀÏ"
+output: word_document
+---
+##1
+$$
+I = \int_0^{1} \frac{e^{-x}}{1+x^2}dx
+$$
+
+```{r}
+g <- function(x) exp(-x)/(1+x^2)
+integrate(g, 0, 1)
+
+se <- function(x) {
+  sqrt(var(x)/length(x))
+}
+```
+
+
+#f0
+```{r}
+n <- 10000
+f0 <- 1
+x0 <- runif(n)
+mean(g(x0)/f0)
+se(g(x0)/f0)
+```
+
+#f1
+```{r}
+f1 <- function(x) exp(-x)
+u <- runif(n)
+x1 <- -log(u)
+mean((g(x1)/f1(x1)*(x1<1)))
+se((g(x1)/f1(x1)*(x1<1)))
+```
+
+#f2
+```{r}
+f2 <- function(x) 1/((1+(x^2))*pi)
+
+u <- runif(n)
+x2 <- tan(pi*(u-0.5))
+a <- (g(x2)/f2(x2))
+a[x2 < 0 | x2 >1] <- 0
+mean(a)
+se(a)
+```
+
+#f3
+```{r}
+f3 <- function(x) exp(-x)/(1-exp(-1))
+
+u <- runif(n)
+x3 <- -log(u)
+x3 <- x3[x3 <=1]
+
+mean((g(x3)/f3(x3)))
+se((g(x3)/f3(x3)))
+```
+
+#f4
+```{r}
+f4 <- function(x) 4/((1+x^2)*pi)
+
+u <- runif(n)
+x4 <- tan((1/4)*pi*u)
+
+mean(g(x4)/f4(x4))
+se(g(x4)/f4(x4))
+```
+The best importance function is f3, because of its smallest standard devation.
+\n\n\n\n
+
+##2
+#(a)
+```{r}
+G <- function(x, m, n) {
+  gamma((1/2)*(m+n))*(m^(m/2))*(n^(n/2))*(x^((m/2)-1))/(gamma(m/2)*gamma(n/2)*((m*x+n)^((m+n)/2)))
+} 
+
+
+rF <- function(n) {
+  x <- numeric(n)
+  for(i in 1:n) {
+    x[i] <- (sum(rnorm(20)^2))/20/((sum(rnorm(9)^2))/9)
+  }
+  return(x)
+}
+
+
+c <- rF(100000)
+print(sum(table(c[c>15]))/100000, digits = 10)
+print(1-pf(15, 20, 9))
+```
+\n
+#(b)
+```{r}
+f <- function(x, n=9) ((n/2)*15^(n/2))/((x^((n/2)+1)))
+
+incdf <- function(x, n=9) (15^(-n/2)-(3^(-n/2))*x)^(-2/n)
+u <- runif(100000, 0, 0.00071) #Don't generate variables too big to be calculated by computer.
+X <- incdf(u)
+
+
+P <- mean((G(X, 20, 9)/f(X, 9)))
+print(P)
+```
+\n\n\n\n
+
+##3
+```{r}
+g <- function(x) {
+  if(x < 1/6) return(1)
+  else if(x < 2/6) return(2)
+  else if(x < 3/6) return(3)
+  else if(x < 4/6) return(4)
+  else if(x < 5/6) return(5)
+  else return(6)
+}
+
+
+fp <- function(x) {
+  if(x ==1 ) return(0.01)
+  else if(x ==2) return(0.39)
+  else if(x ==3) return(0.11)
+  else if(x ==4) return(0.18)
+  else if(x ==5) return(0.26)
+  else return(0.05)
+}
+
+MC <- function(N, init){
+  x<-numeric(N)
+  x[1] <- init
+  for (i in 2:N)
+  {
+    y<- g(runif(1))
+    alpha<-fp(y)/fp(x[i-1])
+    u<-runif(1)
+    if (u<alpha) x[i]<-y
+    else x[i]<-x[i-1]
+  }
+  return(x)}
+a <- MC(10000,2)
+table(a)/10000
+```
+It approximately follows the target distribution.
+
+200 samples are picked from the tail.
+```{r}
+print(a[9801:10000])
+```
+\n\n\n\n
+
+##4
+```{r}
+#Normal
+
+t.normal =function(N,b,init, v){
+  x<-rep(init,N)
+  for (i in 2:N)
+  {
+    y<-rnorm(1,x[i-1],b)
+    alpha<-(((1+y^2)/(1+x[i-1]^2))^(-(v+1)/2))
+    u<-runif(1)
+    if (u<alpha) x[i]<-y
+    else x[i]<-x[i-1]
+  }
+  return(x)}
+
+plot(t.normal(1000, sqrt(0.1), 5, 4), xlab="i", ylab="X[i]", main="sigma = 0.1", type="l")
+plot(t.normal(1000, 1, 5, 4), xlab="i", ylab="X[i]", main="sigma = 1",type="l")
+plot(t.normal(1000, sqrt(2), 5, 4), xlab="i", ylab="X[i]", main="sigma = 2",type="l")
+plot(t.normal(1000, sqrt(10), 5, 4), xlab="i", ylab="X[i]", main="sigma = 10",type="l")
+
+t.cau =function(N,init, v){
+  x<-rep(init,N)
+  for (i in 2:N)
+  {
+    u <- runif(1)
+    y <- tan(pi*(u-0.5))
+    alpha<-(((1+y^2)/(1+x[i-1]^2))^(-(v+1)/2))*(dcauchy(x[i-1])/dcauchy(y))
+    u<-runif(1)
+    if (u<alpha) x[i]<-y
+    else x[i]<-x[i-1]
+  }
+  return(x)}
+
+plot(t.cau(1000, 5, 4), xlab="i", ylab="X[i]", main="Cauchy", type="l")
+```
+\n
+The bigger the variance, the intervals of each step goes bigger, so X is easy to be rejected, but faster to converge in the target distribution. But when converged, big variance interrupts convergence.\n
+If the variance is too small, it takes long time to converge in the target distribution.\n
+When we use Cauchy(0,1)(which is same as t(0,1)) as proposal distribution, because it has thick tail than N(0,1), it shows faster convergence than N(0,1). But it interrupts convergence after reaches the target.
+\n\n\n\n
+
+##5
+```{r}
+m<-1000;
+invcdfx<-function(u,y){
+  -log(u)/(y+1)}
+invcdfy<-function(u,x){
+  -log(u)/(x+1)} 
+x <- matrix(nrow=m, ncol = 2);
+  x[1,2] <- runif(1,0,-log(runif(1)))
+  u1<-runif(1)
+  x[1,1] <- invcdfx(u1,x[1,2])
+  for (j in 2:m) {
+    a <- x[j-1, 1]
+    u2<-runif(1,0, 1)
+    x[j,2] <- invcdfy(u2,x[j-1,1])
+    b <- x[j, 2]
+    u3<-runif(1,0,1)
+    x[j,1] <- invcdfx(u3,x[j,2])
+  }
+
+
+a <- apply(x,2,mean)
+a<-as.matrix(a)
+rownames(a) <- c("E(X1)", "E(X2)")
+print(a)
+
+```
+
