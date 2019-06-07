@@ -45,7 +45,7 @@ RUN;
 /*INVERSE NORMAL METHOD*/
 DATA C;
 	INPUT p @@;
-	z_i=probit(p);
+	z_i=probit(1-p);
 	CARDS;
 	0.025 0.31 0.009 0.28 0.345 0.42 0.06
 	;
@@ -127,6 +127,7 @@ DATA mix;
 RUN;
 
 PROC PRINT DATA=mix;
+	TITLE;
 RUN;
 
 PROC MEANS DATA=mix SUM; 
