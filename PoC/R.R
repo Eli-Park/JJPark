@@ -35,4 +35,16 @@ search2 <- search2[search2$SEARCH_CNT > 5, ]
 #write.csv(search1, "ssearch1.csv")
 #write.csv(search2, "ssearch2.csv")
 
-search2 <- search2[sort(search2$SESS_DT),]
+custom <- fread("scustom.csv")
+product <- fread("sproduct.csv")
+session <- fread("ssession.csv")
+master <- fread("smaster.csv")
+search1 <- fread("ssearch1.csv")
+search2 <- fread("ssearch2.csv")
+
+custom <- custom[,-1]
+product <- product[,-1]
+session <- session[,-1]
+master <- master[,-1]
+search1 <- search1[,-1]
+search2 <- search2[,-1]
